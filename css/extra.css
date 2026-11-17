@@ -1,0 +1,99 @@
+/* ===== LOGIN ===== */
+.login-body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
+.login-card{
+  width:100%;max-width:460px;background:#fff;border-radius:1rem;padding:1.5rem;
+  box-shadow:0 10px 30px rgba(27,39,51,.15);
+  animation:entrar .5s cubic-bezier(.3,.7,.3,1) both
+}
+.login-card h1{font-size:2.4rem}
+.login-card .btn-outline-dark{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:600}
+@keyframes entrar{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+
+/* ===== BARRA DE SESIÓN ===== */
+.sesion{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+
+/* ===== INTERIOR DEL LOCKER (se ve al abrir la puerta) ===== */
+.inside{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;opacity:0;transform:scale(.4);
+  transition:opacity .25s, transform .4s cubic-bezier(.3,1.6,.5,1)
+}
+.locker.open .inside{opacity:1;transform:scale(1);transition-delay:.18s}
+
+/* ===== TARJETA DE INFORMACIÓN ===== */
+.tarjeta{
+  position:fixed;z-index:1030;width:300px;max-width:calc(100vw - 16px);
+  background:#fff;color:var(--ink);border-radius:.75rem;overflow:hidden;
+  box-shadow:0 12px 32px rgba(27,39,51,.28);
+  animation:tarjeta-in .35s cubic-bezier(.3,1.2,.5,1) both
+}
+.t-head{
+  display:flex;align-items:center;justify-content:space-between;gap:.5rem;
+  padding:.6rem .9rem;background:var(--c);color:var(--t,#fff)
+}
+.t-id{font-size:1.6rem;font-weight:700;line-height:1;margin-right:.5rem}
+.t-sec{font-size:.9rem;opacity:.9}
+.t-head .btn-close{background-color:rgba(255,255,255,.75);border-radius:50%;padding:.45rem;opacity:1}
+
+.t-body{padding:.8rem .9rem}
+.t-msg{margin:0 0 .5rem;font-weight:500;display:flex;align-items:center;gap:.5rem}
+.punto{width:.7rem;height:.7rem;border-radius:50%;background:#198754;flex:none;animation:pulso 1.6s infinite}
+
+.t-datos{margin:0}
+.t-datos > div{
+  padding:.35rem 0;border-top:1px solid #e3e7eb;
+  animation:fila .35s ease both;animation-delay:calc(.15s + var(--i) * 70ms)
+}
+.t-datos dt{font-size:.72rem;color:#5a6672;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.t-datos dd{margin:0;font-weight:500;word-break:break-word}
+
+.t-foot{padding:.6rem .9rem;border-top:1px solid #e3e7eb;background:#f6f8fa}
+
+@keyframes tarjeta-in{from{opacity:0;transform:translateY(10px) scale(.92)}to{opacity:1;transform:none}}
+@keyframes fila{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+@keyframes pulso{
+  0%{box-shadow:0 0 0 0 rgba(25,135,84,.6)}
+  70%{box-shadow:0 0 0 8px rgba(25,135,84,0)}
+  100%{box-shadow:0 0 0 0 rgba(25,135,84,0)}
+}
+@keyframes sube{from{transform:translateY(100%)}to{transform:none}}
+
+/* En celular la tarjeta sale desde abajo, a todo lo ancho */
+@media (max-width:575.98px){
+  .tarjeta{
+    left:0 !important;right:0;top:auto !important;bottom:0;width:100%;max-width:none;
+    border-radius:1rem 1rem 0 0;animation-name:sube
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tarjeta,.t-datos > div,.login-card,.punto{animation:none !important}
+  .inside{transition:none}
+}
+/* ===== AVISOS DEL DUEÑO ===== */
+.avisos{background:#fff;border-radius:.75rem;padding:.9rem 1rem;box-shadow:0 2px 10px rgba(27,39,51,.08)}
+.avisos-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.5rem}
+.avisos-titulo{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:700;margin:0;display:flex;align-items:center;gap:.5rem}
+.avisos-badge{background:#dc3545;color:#fff;border-radius:999px;font-size:.85rem;padding:.05rem .55rem;line-height:1.4;animation:latido 1.8s infinite}
+.avisos-lista{list-style:none;margin:0;padding:0;max-height:280px;overflow-y:auto}
+.aviso{
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+  padding:.6rem .5rem;border-top:1px solid #e3e7eb;border-left:4px solid #198754;background:#f1faf5
+}
+.aviso:not(.leido){animation:aviso-in .4s ease both}
+.aviso.leido{border-left-color:transparent;background:transparent;opacity:.7}
+.aviso-texto small{display:block;color:#5a6672}
+.aviso-acciones{display:flex;gap:.4rem;flex:none}
+
+@keyframes aviso-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+
+@media (max-width:575.98px){
+  .aviso{flex-direction:column;align-items:flex-start}
+  .aviso-acciones{width:100%}
+  .aviso-acciones .btn{flex:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .aviso,.avisos-badge{animation:none !important}
+}
+
